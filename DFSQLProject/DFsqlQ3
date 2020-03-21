@@ -1,0 +1,11 @@
+Which countries spent the most on music?
+
+select c.country country_name, count(il.quantity) total_purchases,
+		  sum(il.unitprice) total_spent
+from customer c
+join invoice i
+on c.customerid = i.customerid
+join invoiceline il
+on i.invoiceid = il.invoiceid
+group by 1
+order by 3 desc limit 5

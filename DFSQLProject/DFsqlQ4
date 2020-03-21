@@ -1,0 +1,13 @@
+What is the average spent per transaction by country compared to track price?
+
+select c.country country_name, count(il.quantity) total_purchases,
+		  avg(il.unitprice) avg_spent,
+		  case when avg(il.unitprice) > .99 then 'more_than_one_dollar' else
+		  'less_than_one_dollar' end as price_comp_to_unit
+from customer c
+join invoice i
+on c.customerid = i.customerid
+join invoiceline il
+on i.invoiceid = il.invoiceid
+group by 1
+order by 3 desc
